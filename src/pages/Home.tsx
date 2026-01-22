@@ -44,85 +44,125 @@ function Home() {
     setSelectedPrice("");
   };
 
+  const hasActiveFilters = selectedCategory || isOpenOnly || selectedPrice;
+
   if (isLoading) {
-    return <div className="p-6">Loading...</div>;
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
+          <p className="text-lg text-gray-600">Loading restaurants...</p>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <main className="p-6">
-      <div className="space-y-2">
-        <h1 className="text-4xl font-bold">Restaurant List</h1>
-        <p className="text-lg">
-          Browse our curated list of restaurants. Use the filters to search by
-          price, category, or check if a restaurant is currently open. Find the
-          perfect place for your next meal!
-        </p>
-      </div>
+    <main className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        <div className="bg-white rounded shadow p-6 sm:p-8 mb-6">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-3">
+            Restaurant List
+          </h1>
+          <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
+            Browse our curated list of restaurants. Use the filters to search by
+            price, category, or check if a restaurant is currently open. Find
+            the perfect place for your next meal!
+          </p>
+        </div>
 
-      <div className="mt-4">
-        <div className="flex justify-between items-center">
-          <div className="flex gap-3 my-4 items-center">
-            <label className="text-lg font-semibold">Filter By :</label>
-            <div className="bg-transparent placeholder:text-slate-400 border border-slate-200 rounded pl-3 pr-8 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md appearance-none cursor-pointer flex items-center gap-2 justify-center">
-              <input
-                type="checkbox"
-                checked={isOpenOnly}
-                onChange={(e) => setIsOpenOnly(e.target.checked)}
-                name="is_open"
-                id="is_open"
-              />
-              <label htmlFor="is_open" className="cursor-pointer">
-                Is Open
+        <div className="bg-white rounded shadow p-4 sm:p-6 mb-6">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 items-start sm:items-center">
+              <label className="text-base sm:text-lg font-semibold text-gray-700 whitespace-nowrap">
+                Filter By:
               </label>
+
+              <label className="flex items-center gap-2 px-4 py-2.5 border-2 border-gray-200 rounded-md hover:border-blue-400 transition-colors cursor-pointer bg-white">
+                <input
+                  type="checkbox"
+                  checked={isOpenOnly}
+                  onChange={(e) => setIsOpenOnly(e.target.checked)}
+                  className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                />
+                <span className="text-sm font-medium text-gray-700">
+                  Open Now
+                </span>
+              </label>
+
+              <select
+                className="px-4 py-2.5 border-2 border-gray-200 rounded-md focus:outline-none focus:border-blue-500 hover:border-gray-300 transition-colors cursor-pointer bg-white text-sm font-medium text-gray-700 min-w-32"
+                value={selectedPrice}
+                onChange={(e) =>
+                  setSelectedPrice(e.target.value as PriceLevel | "")
+                }
+              >
+                <option value="">All Prices</option>
+                <option value="$">$ - Budget</option>
+                <option value="$$">$$ - Moderate</option>
+                <option value="$$$">$$$ - Upscale</option>
+                <option value="$$$$">$$$$ - Fine Dining</option>
+              </select>
+
+              <select
+                className="px-4 py-2.5 border-2 border-gray-200 rounded-md focus:outline-none focus:border-blue-500 hover:border-gray-300 transition-colors cursor-pointer bg-white text-sm font-medium text-gray-700 min-w-40"
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+              >
+                <option value="">All Categories</option>
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
             </div>
 
-            <select
-              name=""
-              className="bg-transparent placeholder:text-slate-400 border border-slate-200 rounded pl-3 pr-8 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md appearance-none cursor-pointer"
-              value={selectedPrice}
-              onChange={(e) =>
-                setSelectedPrice(e.target.value as PriceLevel | "")
-              }
-            >
-              <option value="">Price</option>
-              <option value="$">$</option>
-              <option value="$$">$$</option>
-              <option value="$$$">$$$</option>
-              <option value="$$$$">$$$$</option>
-            </select>
+            {hasActiveFilters && (
+              <button
+                onClick={resetFilters}
+                className="px-5 py-2.5 border-2 border-gray-200 rounded-md font-semibold text-gray-700 hover:bg-gray-50 hover:border-gray-300 active:bg-gray-100 transition-all"
+              >
+                Clear All Filters
+              </button>
+            )}
+          </div>
 
-            <select
-              name=""
-              className="bg-transparent placeholder:text-slate-400 border border-slate-200 rounded pl-3 pr-8 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md appearance-none cursor-pointer"
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-            >
-              <option value="">Category</option>
-              {categories.map((category) => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <button
-              onClick={resetFilters}
-              className="border border-gray-200 shadow px-4 py-2 rounded cursor-pointer hover:bg-gray-100 transition"
-            >
-              Clear All
-            </button>
-          </div>
+          {hasActiveFilters && (
+            <div className="mt-4 pt-4 border-t border-gray-100">
+              <p className="text-sm text-gray-600">
+                Showing {filteredRestaurants.length} of{" "}
+                {restaurants?.length || 0} restaurants
+              </p>
+            </div>
+          )}
         </div>
-      </div>
 
-      <div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
-          {filteredRestaurants &&
-            filteredRestaurants.map((restaurant) => (
+        {filteredRestaurants.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {filteredRestaurants.map((restaurant) => (
               <RestaurantCard key={restaurant.id} data={restaurant} />
             ))}
-        </div>
+          </div>
+        ) : (
+          <div className="bg-white rounded shadow p-12 text-center">
+            <div className="text-6xl mb-4">🔍</div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              No restaurants found
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Try adjusting your filters to see more results
+            </p>
+            {hasActiveFilters && (
+              <button
+                onClick={resetFilters}
+                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md transition-colors shadow"
+              >
+                Clear All Filters
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </main>
   );
