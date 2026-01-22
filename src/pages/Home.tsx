@@ -1,10 +1,10 @@
-import { getAllRestaurants } from "./service/restaurant.service";
-import RestaurantCard from "./components/restaurant-card";
+import { getAllRestaurants } from "../service/restaurant.service";
+import RestaurantCard from "../components/restaurant-card";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
-import { PRICE_MAP, type PriceLevel } from "./types/price";
+import { PRICE_MAP, type PriceLevel } from "../types/price";
 
-function App() {
+function Home() {
   const { data: restaurants, isLoading } = useQuery({
     queryKey: ["restaurants"],
     queryFn: getAllRestaurants,
@@ -128,4 +128,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;
