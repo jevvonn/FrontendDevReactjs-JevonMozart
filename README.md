@@ -36,5 +36,5 @@ To get started with the project, follow these steps:
 
 ### Author
 
-Name : Jevon Mozart Christian Bano
-Email : jmcb1602@Gmail.com
+- Name : Jevon Mozart Christian Bano
+- Email : jmcb1602@Gmail.com
