@@ -1,3 +1,5 @@
+import RestaurantCard from "./components/reastaurant-card";
+
 function App() {
   return (
     <main className="p-4">
@@ -15,7 +17,7 @@ function App() {
         <div className="flex justify-between items-center">
           <div className="flex gap-3 my-4 items-center">
             <label className="text-lg font-semibold">Filter By :</label>
-            <div className="flex gap-2 content-center items-center border px-4 py-2 rounded cursor-pointer select-none">
+            <div className="flex gap-2 content-center items-center border border-gray-200 shadow px-4 py-2 rounded cursor-pointer select-none">
               <input
                 type="radio"
                 defaultChecked={false}
@@ -27,7 +29,11 @@ function App() {
               </label>
             </div>
 
-            <select name="" className="px-4 py-2 border rounded" id="">
+            <select
+              name=""
+              className="bg-transparent placeholder:text-slate-400 border border-slate-200 rounded pl-3 pr-8 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md appearance-none cursor-pointer"
+              id=""
+            >
               <option value="">Price</option>
               <option value="1">$</option>
               <option value="2">$$</option>
@@ -35,7 +41,11 @@ function App() {
               <option value="4">$$$$</option>
             </select>
 
-            <select name="" className="px-4 py-2 border rounded" id="">
+            <select
+              name=""
+              className="bg-transparent placeholder:text-slate-400 border border-slate-200 rounded pl-3 pr-8 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md appearance-none cursor-pointer"
+              id=""
+            >
               <option value="">Category</option>
               <option value="Italian">Italian</option>
               <option value="Chinese">Chinese</option>
@@ -45,10 +55,27 @@ function App() {
             </select>
           </div>
           <div>
-            <button className="border px-4 py-2 rounded">Clear All</button>
+            <button className="border border-gray-200 shadow px-4 py-2 rounded">
+              Clear All
+            </button>
           </div>
         </div>
         <hr />
+      </div>
+
+      <div>
+        {/* Restaurant Cards */}
+        <div className="grid grid-cols-4 gap-4 mt-4">
+          <RestaurantCard />
+          <RestaurantCard />
+          <RestaurantCard />
+          <RestaurantCard />
+          <RestaurantCard />
+          <RestaurantCard />
+          <RestaurantCard />
+          <RestaurantCard />
+          <RestaurantCard />
+        </div>
       </div>
     </main>
   );
