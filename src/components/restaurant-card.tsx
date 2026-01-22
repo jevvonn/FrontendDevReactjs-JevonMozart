@@ -1,3 +1,4 @@
+import { getPriceSymbol } from "../lib/utils";
 import type { Restaurant } from "../types/restaurant";
 
 type Props = {
@@ -19,14 +20,15 @@ const RestaurantCard = ({ data }: Props) => {
         <h2 className="text-xl font-bold ">{data.name}</h2>
         <p className="text-gray-600">{data.categories.join(", ")}</p>
         <p>Rating : ⭐ {data.rating}</p>
-        <p
-          className={`${data.is_open ? "text-green-600" : "text-red-600"} font-semibold`}
-        >
-          {data.is_open ? "Open Now" : "Closed"}
-        </p>
-        <p className="">
-          Price Range: ${data.price_start_range} - ${data.price_end_range}
-        </p>
+
+        <div className="flex justify-between items-end">
+          <p>{getPriceSymbol(data.price_end_range)}</p>
+          <p
+            className={`${data.is_open ? "text-green-600" : "text-red-600"} font-semibold`}
+          >
+            {data.is_open ? "Open Now" : "Closed"}
+          </p>
+        </div>
       </div>
 
       <button className="w-full py-2 text-center bg-blue-700 mt-4 cursor-pointer hover:bg-blue-600 transition text-white rounded">
