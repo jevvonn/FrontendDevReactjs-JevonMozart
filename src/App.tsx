@@ -1,7 +1,7 @@
 import { getAllRestaurants } from "./service/restaurant.service";
 import RestaurantCard from "./components/restaurant-card";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { PRICE_MAP, type PriceLevel } from "./types/price";
 
 function App() {
@@ -37,14 +37,6 @@ function App() {
       return matchesCategory && matchesOpenStatus && matchPrice;
     });
   }, [restaurants, selectedCategory, isOpenOnly, selectedPrice]);
-
-  useEffect(() => {
-    if (!restaurants) return;
-
-    restaurants.forEach((res) => {
-      console.log(res.price_end_range - res.price_start_range);
-    });
-  }, [restaurants]);
 
   if (isLoading) {
     return <div className="p-6">Loading...</div>;
