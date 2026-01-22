@@ -28,25 +28,37 @@ To get started with the project, follow these steps:
    ```bash
    cd restaurant-list
    ```
-3. Install the dependencies:
+3. Create a `.env` file in the root directory based on the provided `.env.example` file and set the `VITE_API_URL` variable:
+
+   ```env
+   VITE_API_URL=
+   ```
+
+   You can use the following mock API URL for testing purposes:
+
+   ```env
+   VITE_API_URL=https://6970962478fec16a63fe307f.mockapi.io/api
+   ```
+
+4. Install the dependencies:
    ```bash
    npm install
    ```
-4. Start the development server:
+5. Start the development server:
    ```bash
    npm run dev
    ```
-5. Open your browser and go to `http://localhost:5173` to see the application running.
+6. Open your browser and go to `http://localhost:5173` to see the application running.
 
-6. To build the project for production, run:
+7. To build the project for production, run:
    ```bash
    npm run build
    ```
-7. To preview the production build, run:
+8. To preview the production build, run:
    ```bash
    npm run preview
    ```
-8. Open your browser and go to `http://localhost:4173` to see the application running.
+9. Open your browser and go to `http://localhost:4173` to see the application running.
 
 ### Author
 
