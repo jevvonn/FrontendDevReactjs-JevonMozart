@@ -12,4 +12,15 @@ const getAllRestaurants = async () => {
   }
 };
 
-export { getAllRestaurants };
+const getSpecificRestaurant = async (id: string) => {
+  try {
+    const response = await api.get<Restaurant>(`/restaurant/${id}`);
+    return response.data;
+  } catch (err) {
+    throw new Error("Failed to fetch restaurant", {
+      cause: err,
+    });
+  }
+};
+
+export { getAllRestaurants, getSpecificRestaurant };
