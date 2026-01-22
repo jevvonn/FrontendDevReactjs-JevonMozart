@@ -2,6 +2,10 @@
 
 This project is a simple restaurant list website built with React and TypeScript. This project is built for Technical Test purposes at Sekawan Media [INTERN] Frontend Developer.
 
+### Production Link
+
+**[https://restaurant-list-jevonnmozart.vercel.app](https://restaurant-list-jevonnmozart.vercel.app/)** (Hosted on **Vercel**)
+
 ### Environment
 
 - React version: v19.2.0
@@ -33,6 +37,16 @@ To get started with the project, follow these steps:
    npm run dev
    ```
 5. Open your browser and go to `http://localhost:5173` to see the application running.
+
+6. To build the project for production, run:
+   ```bash
+   npm run build
+   ```
+7. To preview the production build, run:
+   ```bash
+   npm run preview
+   ```
+8. Open your browser and go to `http://localhost:4173` to see the application running.
 
 ### Author
 
