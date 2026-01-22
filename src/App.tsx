@@ -1,8 +1,57 @@
-import RestaurantCard from "./components/reastaurant-card";
+import { getAllRestaurants } from "./service/restaurant.service";
+import RestaurantCard from "./components/restaurant-card";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect, useMemo, useState } from "react";
+import { PRICE_MAP, type PriceLevel } from "./types/price";
 
 function App() {
+  const { data: restaurants, isLoading } = useQuery({
+    queryKey: ["restaurants"],
+    queryFn: getAllRestaurants,
+  });
+
+  const [selectedPrice, setSelectedPrice] = useState<PriceLevel | "">("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [isOpenOnly, setIsOpenOnly] = useState(false);
+
+  const categories = useMemo(() => {
+    if (!restaurants) return [];
+    const allCategories = restaurants.flatMap((res) => res.categories);
+    return Array.from(new Set(allCategories));
+  }, [restaurants]);
+
+  const filteredRestaurants = useMemo(() => {
+    if (!restaurants) return [];
+
+    return restaurants.filter((res) => {
+      const matchesCategory =
+        !selectedCategory || res.categories.includes(selectedCategory);
+      const matchesOpenStatus = !isOpenOnly || res.is_open;
+
+      let matchPrice = true;
+      if (selectedPrice) {
+        const { min, max } = PRICE_MAP[selectedPrice];
+        matchPrice = res.price_start_range <= max && res.price_end_range >= min;
+      }
+
+      return matchesCategory && matchesOpenStatus && matchPrice;
+    });
+  }, [restaurants, selectedCategory, isOpenOnly, selectedPrice]);
+
+  useEffect(() => {
+    if (!restaurants) return;
+
+    restaurants.forEach((res) => {
+      console.log(res.price_end_range - res.price_start_range);
+    });
+  }, [restaurants]);
+
+  if (isLoading) {
+    return <div className="p-6">Loading...</div>;
+  }
+
   return (
-    <main className="p-4">
+    <main className="p-6">
       <div className="space-y-2">
         <h1 className="text-4xl font-bold">Restaurant List</h1>
         <p className="text-lg">
@@ -17,10 +66,11 @@ function App() {
         <div className="flex justify-between items-center">
           <div className="flex gap-3 my-4 items-center">
             <label className="text-lg font-semibold">Filter By :</label>
-            <div className="flex gap-2 content-center items-center border border-gray-200 shadow px-4 py-2 rounded cursor-pointer select-none">
+            <div className="bg-transparent placeholder:text-slate-400 border border-slate-200 rounded pl-3 pr-8 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md appearance-none cursor-pointer flex items-center gap-2 justify-center">
               <input
-                type="radio"
-                defaultChecked={false}
+                type="checkbox"
+                checked={isOpenOnly}
+                onChange={(e) => setIsOpenOnly(e.target.checked)}
                 name="is_open"
                 id="is_open"
               />
@@ -32,26 +82,30 @@ function App() {
             <select
               name=""
               className="bg-transparent placeholder:text-slate-400 border border-slate-200 rounded pl-3 pr-8 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md appearance-none cursor-pointer"
-              id=""
+              value={selectedPrice}
+              onChange={(e) =>
+                setSelectedPrice(e.target.value as PriceLevel | "")
+              }
             >
               <option value="">Price</option>
-              <option value="1">$</option>
-              <option value="2">$$</option>
-              <option value="3">$$$</option>
-              <option value="4">$$$$</option>
+              <option value="$">$</option>
+              <option value="$$">$$</option>
+              <option value="$$$">$$$</option>
+              <option value="$$$$">$$$$</option>
             </select>
 
             <select
               name=""
               className="bg-transparent placeholder:text-slate-400 border border-slate-200 rounded pl-3 pr-8 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md appearance-none cursor-pointer"
-              id=""
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
             >
               <option value="">Category</option>
-              <option value="Italian">Italian</option>
-              <option value="Chinese">Chinese</option>
-              <option value="Mexican">Mexican</option>
-              <option value="Indian">Indian</option>
-              <option value="French">French</option>
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
             </select>
           </div>
           <div>
@@ -64,17 +118,11 @@ function App() {
       </div>
 
       <div>
-        {/* Restaurant Cards */}
-        <div className="grid grid-cols-4 gap-4 mt-4">
-          <RestaurantCard />
-          <RestaurantCard />
-          <RestaurantCard />
-          <RestaurantCard />
-          <RestaurantCard />
-          <RestaurantCard />
-          <RestaurantCard />
-          <RestaurantCard />
-          <RestaurantCard />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+          {filteredRestaurants &&
+            filteredRestaurants.map((restaurant) => (
+              <RestaurantCard key={restaurant.id} data={restaurant} />
+            ))}
         </div>
       </div>
     </main>
