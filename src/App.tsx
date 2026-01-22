@@ -38,6 +38,12 @@ function App() {
     });
   }, [restaurants, selectedCategory, isOpenOnly, selectedPrice]);
 
+  const resetFilters = () => {
+    setSelectedCategory("");
+    setIsOpenOnly(false);
+    setSelectedPrice("");
+  };
+
   if (isLoading) {
     return <div className="p-6">Loading...</div>;
   }
@@ -54,7 +60,6 @@ function App() {
       </div>
 
       <div className="mt-4">
-        <hr />
         <div className="flex justify-between items-center">
           <div className="flex gap-3 my-4 items-center">
             <label className="text-lg font-semibold">Filter By :</label>
@@ -101,16 +106,18 @@ function App() {
             </select>
           </div>
           <div>
-            <button className="border border-gray-200 shadow px-4 py-2 rounded">
+            <button
+              onClick={resetFilters}
+              className="border border-gray-200 shadow px-4 py-2 rounded cursor-pointer hover:bg-gray-100 transition"
+            >
               Clear All
             </button>
           </div>
         </div>
-        <hr />
       </div>
 
       <div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
           {filteredRestaurants &&
             filteredRestaurants.map((restaurant) => (
               <RestaurantCard key={restaurant.id} data={restaurant} />
