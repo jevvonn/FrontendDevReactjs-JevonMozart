@@ -75,10 +75,17 @@ function Home() {
       <div className="max-w-7xl mx-auto">
         <div className="bg-white rounded shadow p-6 sm:p-8 mb-6">
           {userState && (
-            <p className="text-lg text-gray-600 mb-2">
-              Welcome back,{" "}
-              <span className="font-medium">{userState.firstName}</span>!
-            </p>
+            <div className="flex items-center gap-2">
+              <p className="text-lg text-gray-600">
+                Welcome back,{" "}
+                <span className="font-medium">
+                  {userState.firstName} {userState.lastName}{" "}
+                  {userState.maidenName}
+                </span>
+                !
+              </p>
+              <img src={userState.image} className="w-6 h-6 object-cover" />
+            </div>
           )}
           <div className="flex justify-between items-center">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-3">
