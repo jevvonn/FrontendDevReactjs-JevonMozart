@@ -11,6 +11,8 @@ This project is a simple restaurant list website built with React and TypeScript
 - React version: v19.2.0
 - Node Version: v21.0.0
 - Package Manager: npm v10.9.1
+- Restaurant API: [MockAPI](https://mockapi.io/)
+- User Authentication: [DummyJSON](https://dummyjson.com/docs/users)
 
 ### Prerequisites
 
@@ -59,6 +61,13 @@ To get started with the project, follow these steps:
    npm run preview
    ```
 9. Open your browser and go to `http://localhost:4173` to see the application running.
+
+### Credentials for Login
+
+- Username: `jamesd`
+- Password: `jamesdpass`
+
+Or you can use any valid username and password from DummyJSON Users: [https://dummyjson.com/users](https://dummyjson.com/users).
 
 ### Author
 
