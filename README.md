@@ -4,7 +4,7 @@ This project is a simple restaurant list website built with React and TypeScript
 
 ### Production Link
 
-**[https://restaurant-list-jevonnmozart.vercel.app](https://restaurant-list-jevonnmozart.vercel.app/)** (Hosted on **Vercel**)
+**[https://restaurant-frontendev-jevonmozart.vercel.app](https://restaurant-frontendev-jevonmozart.vercel.app)** (Hosted on **Vercel**)
 
 ### Environment
 
