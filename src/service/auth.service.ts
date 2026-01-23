@@ -39,4 +39,8 @@ const login = async (username: string, password: string) => {
   return false;
 };
 
-export { isAuthenticated, login };
+const logout = () => {
+  Cookies.remove("auth_token");
+};
+
+export { isAuthenticated, login, logout };

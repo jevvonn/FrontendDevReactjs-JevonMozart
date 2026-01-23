@@ -3,8 +3,11 @@ import RestaurantCard from "../components/restaurant-card";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { PRICE_MAP, type PriceLevel } from "../types/price";
+import { logout } from "../service/auth.service";
+import { useNavigate } from "react-router";
 
 function Home() {
+  const navigate = useNavigate();
   const { data: restaurants, isLoading } = useQuery({
     queryKey: ["restaurants"],
     queryFn: getAllRestaurants,
@@ -46,6 +49,13 @@ function Home() {
 
   const hasActiveFilters = selectedCategory || isOpenOnly || selectedPrice;
 
+  const submitLogout = () => {
+    logout();
+    navigate("/login", {
+      replace: true,
+    });
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -61,9 +71,17 @@ function Home() {
     <main className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="bg-white rounded shadow p-6 sm:p-8 mb-6">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-3">
-            Restaurant List
-          </h1>
+          <div className="flex justify-between items-center">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-3">
+              Restaurant List
+            </h1>
+            <button
+              onClick={submitLogout}
+              className="px-4 py-2 h-max bg-red-600 hover:bg-red-700 text-white font-semibold rounded-md transition-colors shadow cursor-pointer"
+            >
+              Logout
+            </button>
+          </div>
           <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
             Browse our curated list of restaurants. Use the filters to search by
             price, category, or check if a restaurant is currently open. Find

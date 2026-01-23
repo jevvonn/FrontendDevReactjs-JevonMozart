@@ -27,7 +27,9 @@ export const LoginPage = () => {
       if (!response) {
         setError("Invalid username or password");
       } else {
-        navigate("/");
+        navigate("/", {
+          replace: true,
+        });
       }
     } finally {
       setIsLoading(false);
