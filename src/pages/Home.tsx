@@ -5,9 +5,12 @@ import { useMemo, useState } from "react";
 import { PRICE_MAP, type PriceLevel } from "../types/price";
 import { logout } from "../service/auth.service";
 import { useNavigate } from "react-router";
+import { useAppSelector } from "../hooks";
 
 function Home() {
   const navigate = useNavigate();
+  const userState = useAppSelector((state) => state.user);
+
   const { data: restaurants, isLoading } = useQuery({
     queryKey: ["restaurants"],
     queryFn: getAllRestaurants,
@@ -71,6 +74,12 @@ function Home() {
     <main className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="bg-white rounded shadow p-6 sm:p-8 mb-6">
+          {userState && (
+            <p className="text-lg text-gray-600 mb-2">
+              Welcome back,{" "}
+              <span className="font-medium">{userState.firstName}</span>!
+            </p>
+          )}
           <div className="flex justify-between items-center">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-3">
               Restaurant List

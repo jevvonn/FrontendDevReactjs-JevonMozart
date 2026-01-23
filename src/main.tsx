@@ -8,6 +8,8 @@ import RestaurantPage from "./pages/Restaurant.tsx";
 import Authenticated from "./components/authenticated.tsx";
 import { LoginPage } from "./pages/Login.tsx";
 import Guest from "./components/guest.tsx";
+import { Provider } from "react-redux";
+import { store } from "./store.ts";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +42,8 @@ const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
   <QueryClientProvider client={queryClient}>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </QueryClientProvider>,
 );
