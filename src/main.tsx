@@ -5,15 +5,34 @@ import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import Home from "./pages/Home.tsx";
 import RestaurantPage from "./pages/Restaurant.tsx";
+import Authenticated from "./components/authenticated.tsx";
+import { LoginPage } from "./pages/Login.tsx";
+import Guest from "./components/guest.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: (
+      <Authenticated>
+        <Home />
+      </Authenticated>
+    ),
+  },
+  {
+    path: "/login",
+    element: (
+      <Guest>
+        <LoginPage />
+      </Guest>
+    ),
   },
   {
     path: "/restaurant/:id",
-    element: <RestaurantPage />,
+    element: (
+      <Authenticated>
+        <RestaurantPage />
+      </Authenticated>
+    ),
   },
 ]);
 
